@@ -3,11 +3,20 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const publicPath = path.join(__dirname,'./public')
 const { save_user_info, get_total_amount } = require("./models/server_db");
+var paypal = require('paypal-rest-sdk');
 const app = express();
 
 app.use(bodyParser.json());
 app.use(express.static(publicPath));
-app.post("/",async (req,res)=>{
+
+paypal.configure({
+    'mode': 'sandbox', //sandbox or live
+    'client_id': 'AZxji6Z1mq7FdjO-MD8Q21DdJS2KDABkFsRsphg6OsIdW-FWrIYo3KG4BSI5MeH1XRfH0gGkfwZOy0Jk',
+    'client_secret': 'EJ3RnLtNLZCYZmOrdWF9h_ZM8cc5JZ4ylD_qW5-9Iy7zDgqmajI7dCdJf9UUFseC9lSacuGMQWk2VHR_'
+  });
+
+
+app.post("/post_info",async (req,res)=>{
     var email = req.body.email;
     var amount = req.body.amount;
 
@@ -19,6 +28,7 @@ app.post("/",async (req,res)=>{
     }
 
     var result = await save_user_info({"amount":amount,"email":email});
+    console.log(result);
     res.send(result);
 });
 
