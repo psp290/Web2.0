@@ -22,21 +22,48 @@ class App extends React.Component{
             amount:this.state.amount,
             email:this.state.email
         });
+        window.location.href = response.data;
         console.log(response);
     }
 
     render(){
         return (
             <div>
-                <h1>Lottery application</h1>
-                <div>
-                    <p>Total Lottery Amount is {this.state.total_amount}</p>
-                </div>
-                <form onSubmit={this.onSubmitChange}>
-                    <input placeholder="amount" name="amount" value={this.state.amount} onChange={this.handleChange} />
-                    <input placeholder="email" name="email" value={this.state.email} onChange={this.handleChange} />
-                    <button type="submit" >Participate</button>
-                </form>
+            <div className="container">
+            <div className="col-md-12">
+              <div className="card text-center">
+                  <div className="card-header">
+                    <h1>TOTAL WINNING POOL IS </h1>
+                    <div className ="block">
+                        <div className="circle">
+                          <p>${this.state.total_amount}</p>
+                        </div>
+                    </div>
+                  </div>
+                  <div className="card-body">
+                  <form onSubmit={this.onSubmitChange}>
+                      <div className="form-group">
+                        <label >Email address</label>
+                        <input type="email" className="form-control" placeholder="Enter email"
+                          onChange={this.handleChange}
+                        />
+                        <small className="form-text text-muted">Well never share your email with anyone else.</small>
+                      </div>
+                      <div className="form-group">
+                        <label>Amount</label>
+                        <input type="number" className="form-control"  placeholder="Enter Amount"
+                          value={this.state.amount}
+                          onChange={this.handleChange}
+                        />
+                        <small className="form-text text-muted">Enter the amount you would like to participate with</small>
+                      </div>
+                      <button type="submit" className="btn btn-primary">Submit</button>
+                    </form>
+                  </div>
+              </div>
+            </div>
+        </div>
+
             </div>
         );
     }
